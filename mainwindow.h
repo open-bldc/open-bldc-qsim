@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "qcustomplot.h"
+#include "signalplot.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +18,6 @@ public:
     
 private:
     Ui::MainWindow *ui;
-    void setupCustomPlot(QCustomPlot *customPlot);
 };
 
 #endif // MAINWINDOW_H

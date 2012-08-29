@@ -12,9 +12,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    simthread.cpp \
+    signalplot.cpp
 
 HEADERS  += mainwindow.h \
-    qcustomplot.h
+    qcustomplot.h \
+    simthread.h \
+    signalplot.h
 
 FORMS    += mainwindow.ui

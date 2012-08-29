@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
-     <widget class="QCustomPlot" name="customPlot" native="true"/>
+     <widget class="SignalPlot" name="signalPlot" native="true"/>
     </item>
    </layout>
   </widget>
@@ -55,9 +55,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QCustomPlot</class>
+   <class>SignalPlot</class>
    <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
+   <header>signalplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
