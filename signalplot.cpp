@@ -32,3 +32,12 @@ void SignalPlot::setupPlot()
 
     graph(0)->rescaleAxes(false, false);
 }
+
+void SignalPlot::addDataPoint(double time, double val)
+{
+    qDebug() << "Getting point " << val;
+    graph(0)->addData(time, val);
+    graph(0)->removeDataBefore(time - 4);
+    xAxis->setRange(time,4,Qt::AlignRight);
+    replot();
+}

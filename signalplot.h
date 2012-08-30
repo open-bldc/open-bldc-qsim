@@ -13,8 +13,9 @@ private:
     void setupPlot();
 
 signals:
-    
+
 public slots:
+    void addDataPoint(double time, double val);
     
 };
 

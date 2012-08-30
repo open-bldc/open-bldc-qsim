@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "signalplot.h"
+#include "simthread.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,7 @@ public:
     
 private:
     Ui::MainWindow *ui;
+    SimThread st;
 };
 
 #endif // MAINWINDOW_H

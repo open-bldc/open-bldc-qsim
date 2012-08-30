@@ -10,10 +10,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(&st, SIGNAL(sendDataPoint(double, double)), ui->signalPlot, SLOT(addDataPoint(double, double)), Qt::QueuedConnection);
+    st.start();
+    qDebug() << "Hello from GUI thread.";
+
+
     ui->signalPlot->replot();
 }
 
 MainWindow::~MainWindow()
 {
+    st.stopSim();
+    st.wait();
     delete ui;
 }
