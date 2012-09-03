@@ -3,6 +3,8 @@
 
 #include <QThread>
 #include <QMutex>
+#include <QTimer>
+#include <qcustomplot.h>
 
 class SimThread : public QThread
 {
@@ -13,12 +15,16 @@ public:
 
 private:
     double time;
+    QTimer sendDataTimer;
     bool shouldQuit;
     QMutex shouldQuitMutex;
+    QVector<double> *dataTimes;
+    QVector<double> *dataValues;
     void run();
+
 signals:
-    void sendDataPoint(double time, double val);
-    
+    void sendDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+
 public slots:
     
 };

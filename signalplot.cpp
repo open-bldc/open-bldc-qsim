@@ -33,11 +33,23 @@ void SignalPlot::setupPlot()
     graph(0)->rescaleAxes(false, false);
 }
 
-void SignalPlot::addDataPoint(double time, double val)
+void SignalPlot::addDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues)
 {
-    qDebug() << "Getting point " << val;
-    graph(0)->addData(time, val);
-    graph(0)->removeDataBefore(time - 4);
-    xAxis->setRange(time,4,Qt::AlignRight);
+/*
+    QVectorIterator<double> tn(*dataTimes);
+    QVectorIterator<double> vn(*dataValues);
+    int count = 0;
+
+    while (tn.hasNext()) {
+        qDebug() << "Getting point " << count << " with time " << tn.next() << " and value " << vn.next();
+        count++;
+    }
+*/
+
+    graph(0)->addData(*dataTimes,*dataValues);
+    graph(0)->removeDataBefore(dataTimes->last() - 4);
+    xAxis->setRange(dataTimes->last(), 4, Qt::AlignRight);
     replot();
+    delete dataTimes;
+    delete dataValues;
 }
