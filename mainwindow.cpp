@@ -10,17 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(&st, SIGNAL(sendDataPoints(QVector<double> *, QVector<double> *)), ui->signalPlot, SLOT(addDataPoints(QVector<double> *, QVector<double> *)), Qt::QueuedConnection);
-    st.start();
-    qDebug() << "Hello from GUI thread.";
+    sr = new SimRunner();
 
-
-    ui->signalPlot->replot();
+    connect(ui->runSimButton, SIGNAL(clicked()), sr, SLOT(runSim()));
+    connect(sr, SIGNAL(newDataPoints(QVector<double>*,QVector<double>*)), ui->signalPlot, SLOT(onNewDataPoints(QVector<double>*,QVector<double>*)));
 }
 
 MainWindow::~MainWindow()
 {
-    st.stopSim();
-    st.wait();
     delete ui;
 }

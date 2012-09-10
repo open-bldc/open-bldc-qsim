@@ -17,7 +17,7 @@ private:
 signals:
 
 public slots:
-    void addDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void onNewDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
     
 };
 

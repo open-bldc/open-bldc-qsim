@@ -1,9 +1,9 @@
 #include <QtDebug>
-#include "simthread.h"
+#include "sim.h"
 #include <cmath>
 
-SimThread::SimThread(QObject *parent) :
-    QThread(parent)
+Sim::Sim(QObject *parent) :
+    QObject(parent)
 {
     shouldQuit = false;
     time = 4.0;
@@ -13,7 +13,12 @@ SimThread::SimThread(QObject *parent) :
     dataValues = NULL;
 }
 
-void SimThread::run()
+Sim::~Sim()
+{
+    qDebug() << "Deleting simulator...";
+}
+
+void Sim::start()
 {
     qDebug() << "Hello from the simulator thread " << thread()->currentThreadId();
 
@@ -34,17 +39,16 @@ void SimThread::run()
         dataValues->append(value);
         if (!sendDataTimer.isActive()) {
             //qDebug() << "Adding " << dataTimes->count() << " data points from " << dataTimes->first() << " to " << dataTimes->last();
-            emit sendDataPoints(dataTimes, dataValues);
+            emit newDataPoints(dataTimes, dataValues);
             dataTimes = NULL;
             dataValues = NULL;
             sendDataTimer.start();
         }
         double blubb;
-        for (int j = 0; j<1000; j++){
+        for (int j = 0; j<100; j++){
             blubb = sin(cos(tan((double)i)));
             blubb = blubb * blubb;
         }
-
         shouldQuitMutex.lock();
         if (shouldQuit){
             shouldQuitMutex.unlock();
@@ -52,11 +56,13 @@ void SimThread::run()
         }
         shouldQuitMutex.unlock();
     }
+    sendDataTimer.stop();
 
     qDebug() << "Finished generating and sending data.";
+    emit finished();
 }
 
-void SimThread::stopSim()
+void Sim::stopSim()
 {
     shouldQuitMutex.lock();
     shouldQuit = true;

@@ -13,12 +13,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     qcustomplot.cpp \
-    simthread.cpp \
-    signalplot.cpp
+    signalplot.cpp \
+    simrunner.cpp \
+    sim.cpp
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
-    simthread.h \
-    signalplot.h
+    signalplot.h \
+    simrunner.h \
+    sim.h
 
 FORMS    += mainwindow.ui
+
+LIBS_PRIVATE += -framework Foundation

@@ -2142,6 +2142,7 @@ protected:
   
   // reimplemented methods:
   virtual QSize minimumSizeHint() const;
+  virtual QSize sizeHint() const;
   virtual void paintEvent(QPaintEvent *event);
   virtual void resizeEvent(QResizeEvent *event);
   virtual void mouseDoubleClickEvent(QMouseEvent *event);

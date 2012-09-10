@@ -7503,6 +7503,11 @@ QSize QCustomPlot::minimumSizeHint() const
   return QSize(50, 50);
 }
 
+QSize QCustomPlot::sizeHint() const
+{
+    return QSize(300,50);
+}
+
 /*! \internal
   
   Event handler for when the QCustomPlot widget needs repainting. This does not cause a replot, but

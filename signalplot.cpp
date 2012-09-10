@@ -33,9 +33,9 @@ void SignalPlot::setupPlot()
     graph(0)->rescaleAxes(false, false);
 }
 
-void SignalPlot::addDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues)
+void SignalPlot::onNewDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues)
 {
-/*
+#if 0
     QVectorIterator<double> tn(*dataTimes);
     QVectorIterator<double> vn(*dataValues);
     int count = 0;
@@ -44,7 +44,7 @@ void SignalPlot::addDataPoints(QVector<double> *dataTimes, QVector<double> *data
         qDebug() << "Getting point " << count << " with time " << tn.next() << " and value " << vn.next();
         count++;
     }
-*/
+#endif
 
     graph(0)->addData(*dataTimes,*dataValues);
     graph(0)->removeDataBefore(dataTimes->last() - 4);

@@ -1,16 +1,17 @@
-#ifndef SIMTHREAD_H
-#define SIMTHREAD_H
+#ifndef SIM_H
+#define SIM_H
 
 #include <QThread>
 #include <QMutex>
 #include <QTimer>
 #include <qcustomplot.h>
 
-class SimThread : public QThread
+class Sim : public QObject
 {
     Q_OBJECT
 public:
-    explicit SimThread(QObject *parent = 0);
+    explicit Sim(QObject *parent = 0);
+    ~Sim();
     void stopSim();
 
 private:
@@ -20,13 +21,13 @@ private:
     QMutex shouldQuitMutex;
     QVector<double> *dataTimes;
     QVector<double> *dataValues;
-    void run();
 
 signals:
-    void sendDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void newDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void finished();
 
 public slots:
-    
+    void start();
 };
 
-#endif // SIMTHREAD_H
+#endif // SIM_H
