@@ -21,11 +21,12 @@ void SignalPlot::setupPlot()
     xAxis->setNumberFormat("f");
     xAxis->setNumberPrecision(3);
     xAxis->setAutoTickStep(false);
-    xAxis->setTickStep(1);
+    xAxis->setTickStep(0.005);
     setupFullAxesBox();
 
     xAxis->setLabel("Time (s)");
 
+#if 0
     {
         double value;
         for (int i = 0; i<4000; i++) {
@@ -35,7 +36,7 @@ void SignalPlot::setupPlot()
             graph(2)->addData((double)(1.0/1000.0)*i, value/10);
         }
     }
-
+#endif
     graph(0)->rescaleAxes(false, false);
     //graph(1)->rescaleAxes(false, false);
     //graph(2)->rescaleAxes(false, false);
@@ -55,12 +56,14 @@ void SignalPlot::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<dou
 #endif
 
     graph(0)->addData(*dataTimes, *(*dataValues)[0]);
-    graph(0)->removeDataBefore(dataTimes->last() - 4);
+    graph(0)->removeDataBefore(dataTimes->last() - 0.01);
     graph(1)->addData(*dataTimes, *(*dataValues)[1]);
-    graph(1)->removeDataBefore(dataTimes->last() - 4);
+    graph(1)->removeDataBefore(dataTimes->last() - 0.01);
     graph(2)->addData(*dataTimes, *(*dataValues)[2]);
-    graph(2)->removeDataBefore(dataTimes->last() - 4);
-    xAxis->setRange(dataTimes->last(), 4, Qt::AlignRight);
+    graph(2)->removeDataBefore(dataTimes->last() - 0.01);
+    xAxis->setRange(dataTimes->last(), 0.01, Qt::AlignRight);
+    yAxis->setRange(-.000001, .000001);
+    qDebug() << "iu " << (*dataValues)[0]->last() << " iv " << (*dataValues)[1]->last() << " iw " << (*dataValues)[2]->last();
     replot();
 
     delete dataTimes;

@@ -6,6 +6,9 @@
 #include <QTimer>
 #include <qcustomplot.h>
 
+#include "csim/src/dyn_model.h"
+#include "csim/src/controller.h"
+
 class Sim : public QObject
 {
     Q_OBJECT
@@ -21,6 +24,11 @@ private:
     QMutex shouldQuitMutex;
     QVector<double> *dataTimes;
     QVector<QVector<double> *> *dataValues;
+    struct motor motor;
+    struct command_vector cv;
+    struct perturbation_vector pv;
+    struct parameters params;
+    struct setpoint setpoint;
 
 signals:
     void newDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
