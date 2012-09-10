@@ -33,10 +33,20 @@ void Sim::start()
             dataTimes = new QVector<double>;
         }
         if (dataValues == NULL) {
-            dataValues = new QVector<double>;
+            dataValues = new QVector<QVector<double> *>;
+            dataValues->append(new QVector<double>);
+            dataValues->append(new QVector<double>);
+            dataValues->append(new QVector<double>);
         }
         dataTimes->append(time);
-        dataValues->append(value);
+        (*dataValues)[0]->append(value);
+
+        value = sin((M_PI/1000)*i);
+        (*dataValues)[1]->append(value);
+
+        value = sin((M_PI/2000)*i);
+        (*dataValues)[2]->append(value);
+
         if (!sendDataTimer.isActive()) {
             //qDebug() << "Adding " << dataTimes->count() << " data points from " << dataTimes->first() << " to " << dataTimes->last();
             emit newDataPoints(dataTimes, dataValues);

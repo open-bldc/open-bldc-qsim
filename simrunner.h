@@ -17,11 +17,11 @@ private:
     bool running;
 
 signals:
-    void newDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void newDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     
 public slots:
     void runSim(void);
-    void onNewDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     void simFinished(void);
     
 };

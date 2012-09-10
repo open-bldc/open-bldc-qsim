@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sr = new SimRunner();
 
     connect(ui->runSimButton, SIGNAL(clicked()), sr, SLOT(runSim()));
-    connect(sr, SIGNAL(newDataPoints(QVector<double>*,QVector<double>*)), ui->signalPlot, SLOT(onNewDataPoints(QVector<double>*,QVector<double>*)));
+    connect(sr, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), ui->signalPlot, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)));
 }
 
 MainWindow::~MainWindow()

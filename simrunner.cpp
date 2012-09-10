@@ -22,7 +22,7 @@ void SimRunner::runSim(void)
         sim = new Sim();
         sim->moveToThread(thread);
         connect(thread, SIGNAL(started()), sim, SLOT(start()), Qt::QueuedConnection);
-        connect(sim, SIGNAL(newDataPoints(QVector<double>*,QVector<double>*)), this, SLOT(onNewDataPoints(QVector<double>*,QVector<double>*)), Qt::QueuedConnection);
+        connect(sim, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), this, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)), Qt::QueuedConnection);
         connect(sim, SIGNAL(finished()), thread, SLOT(quit()), Qt::QueuedConnection);
         connect(sim, SIGNAL(finished()), sim, SLOT(deleteLater()), Qt::QueuedConnection);
         connect(sim, SIGNAL(finished()), this, SLOT(simFinished()));
@@ -33,7 +33,7 @@ void SimRunner::runSim(void)
     }
 }
 
-void SimRunner::onNewDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues)
+void SimRunner::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues)
 {
     emit newDataPoints(dataTimes, dataValues);
 }

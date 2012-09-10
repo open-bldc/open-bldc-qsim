@@ -7,7 +7,6 @@ class SignalPlot : public QCustomPlot
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString title READ title WRITE setTitle)
 public:
     explicit SignalPlot(QWidget *parent = 0);
 
@@ -17,7 +16,7 @@ private:
 signals:
 
 public slots:
-    void onNewDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     
 };
 

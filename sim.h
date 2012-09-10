@@ -20,10 +20,10 @@ private:
     bool shouldQuit;
     QMutex shouldQuitMutex;
     QVector<double> *dataTimes;
-    QVector<double> *dataValues;
+    QVector<QVector<double> *> *dataValues;
 
 signals:
-    void newDataPoints(QVector<double> *dataTimes, QVector<double> *dataValues);
+    void newDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     void finished();
 
 public slots:
