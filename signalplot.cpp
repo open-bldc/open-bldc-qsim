@@ -80,8 +80,9 @@ void SignalPlot::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<dou
     graph(2)->addData(*dataTimes, *(*dataValues)[2]);
     graph(2)->removeDataBefore(dataTimes->last() - 0.01);
     xAxis->setRange(dataTimes->last(), 0.01, Qt::AlignRight);
-    yAxis->setRange(-.000001, .000001);
-    qDebug() << "iu " << (*dataValues)[0]->last() << " iv " << (*dataValues)[1]->last() << " iw " << (*dataValues)[2]->last();
+    graph(0)->rescaleValueAxis(false,false);
+    graph(1)->rescaleValueAxis(true,false);
+    graph(2)->rescaleValueAxis(true,false);
     replot();
 
     delete dataTimes;
