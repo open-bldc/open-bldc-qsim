@@ -1,0 +1,3 @@
+[submodule "csim"]
+	path = csim
+	url = git://github.com/open-bldc/open-bldc-csim.git
