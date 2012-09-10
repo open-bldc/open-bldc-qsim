@@ -15,14 +15,25 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     signalplot.cpp \
     simrunner.cpp \
-    sim.cpp
+    sim.cpp \
+    csim/src/misc_utils.c \
+    csim/src/dyn_model.c \
+    csim/src/controller.c
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
     signalplot.h \
     simrunner.h \
-    sim.h
+    sim.h \
+    csim/src/misc_utils.h \
+    csim/src/dyn_model.h \
+    csim/src/controller.h
 
 FORMS    += mainwindow.ui
 
-LIBS_PRIVATE += -framework Foundation
+macx {
+    LIBS += -L/opt/local/lib
+    INCLUDEPATH += /opt/local/include
+}
+
+LIBS += -lgsl
