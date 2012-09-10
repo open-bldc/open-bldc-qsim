@@ -62,4 +62,7 @@ void SignalPlot::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<dou
     graph(2)->removeDataBefore(dataTimes->last() - 4);
     xAxis->setRange(dataTimes->last(), 4, Qt::AlignRight);
     replot();
+
+    delete dataTimes;
+    delete dataValues;
 }
