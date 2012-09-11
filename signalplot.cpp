@@ -32,6 +32,10 @@ void SignalPlot::setupPlot()
     graph(1)->setPen(QPen(Qt::red));
     addGraph(); // green line
     graph(2)->setPen(QPen(Qt::green));
+    addGraph(); // magenta line
+    graph(3)->setPen(QPen(Qt::magenta));
+    addGraph(); // cyan line
+    graph(4)->setPen(QPen(Qt::cyan));
     //graph(0)->setBrush(QBrush(QColor(240, 255, 200)));
     //graph(0)->setAntialiasedFill(true);
 
@@ -55,9 +59,11 @@ void SignalPlot::setupPlot()
         }
     }
 #endif
-    graph(0)->rescaleAxes(false, false);
+    //graph(0)->rescaleAxes(false, false);
     //graph(1)->rescaleAxes(false, false);
     //graph(2)->rescaleAxes(false, false);
+    xAxis->setRange(0, 0.01);
+    yAxis->setRange(-1, 1);
 }
 
 void SignalPlot::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues)
@@ -74,15 +80,22 @@ void SignalPlot::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<dou
 #endif
 
     graph(0)->addData(*dataTimes, *(*dataValues)[0]);
-    graph(0)->removeDataBefore(dataTimes->last() - 0.01);
+    graph(0)->removeDataBefore(dataTimes->last() - 0.1);
     graph(1)->addData(*dataTimes, *(*dataValues)[1]);
-    graph(1)->removeDataBefore(dataTimes->last() - 0.01);
+    graph(1)->removeDataBefore(dataTimes->last() - 0.1);
     graph(2)->addData(*dataTimes, *(*dataValues)[2]);
-    graph(2)->removeDataBefore(dataTimes->last() - 0.01);
-    xAxis->setRange(dataTimes->last(), 0.01, Qt::AlignRight);
+    graph(2)->removeDataBefore(dataTimes->last() - 0.1);
+    graph(3)->addData(*dataTimes, *(*dataValues)[3]);
+    graph(3)->removeDataBefore(dataTimes->last() - 0.1);
+    graph(4)->addData(*dataTimes, *(*dataValues)[4]);
+    graph(4)->removeDataBefore(dataTimes->last() - 0.1);
+    xAxis->setRange(dataTimes->last(), 0.1, Qt::AlignRight);
     graph(0)->rescaleValueAxis(false,false);
     graph(1)->rescaleValueAxis(true,false);
     graph(2)->rescaleValueAxis(true,false);
+    graph(3)->rescaleValueAxis(true,false);
+    graph(4)->rescaleValueAxis(true,false);
+    yAxis->setRange(yAxis->range().lower*1.1, yAxis->range().upper*1.1);
     replot();
 
     delete dataTimes;

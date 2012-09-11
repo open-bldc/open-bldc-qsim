@@ -23,6 +23,7 @@
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
+#include "csim/src/misc_utils.h"
 
 Sim::Sim(QObject *parent) :
     QObject(parent)
@@ -42,7 +43,7 @@ Sim::Sim(QObject *parent) :
     motor.L = 0.00207;
     motor.M = -0.00069;
     motor.R = 11.9;
-    motor.VDC = 300;
+    motor.VDC = 25;
     motor.NbPoles = 4;
 
     cv.hu = true;
@@ -52,14 +53,14 @@ Sim::Sim(QObject *parent) :
     cv.hw = false;
     cv.lw = false;
 
-    pv.torque = 1.0;
+    pv.torque = -0.2;
 
     params.m = &motor;
     params.cv = &cv;
     params.pv = &pv;
 
     setpoint.pwm_frequency = 10000;
-    setpoint.pwm_duty = 1;
+    setpoint.pwm_duty = 0.25;
 }
 
 Sim::~Sim()
@@ -76,10 +77,10 @@ void Sim::start()
     gsl_odeiv2_system sys = {dyn, NULL, 5, &params};
 
     // prams: system, driver, initial step size, absolute error, relative error
-    gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rk4, 1e-6, 1e-6, 0.0);
+    gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45, 1e-6, 1e-6, 0.0);
 
     int i;
-    double t = 0.0, t1 = .20;
+    double t = 0.0, t1 = 20.0;
     double sim_freq = 1000000;
     int steps = (t1-t) * sim_freq;
     struct state_vector sv;
@@ -107,13 +108,17 @@ void Sim::start()
             dataValues->append(new QVector<double>);
             dataValues->append(new QVector<double>);
             dataValues->append(new QVector<double>);
+            dataValues->append(new QVector<double>);
+            dataValues->append(new QVector<double>);
         }
         dataTimes->append(t);
         (*dataValues)[0]->append(sv.iu);
         (*dataValues)[1]->append(sv.iv);
         (*dataValues)[2]->append(sv.iw);
+        (*dataValues)[3]->append(norm_angle(sv.theta)/100);
+        (*dataValues)[4]->append(sv.omega/200);
 
-        if (!sendDataTimer.isActive()) {
+        if (!sendDataTimer.isActive() || (i == steps)) {
             //qDebug() << "Adding " << dataTimes->count() << " data points from " << dataTimes->first() << " to " << dataTimes->last();
             emit newDataPoints(dataTimes, dataValues);
             dataTimes = NULL;
