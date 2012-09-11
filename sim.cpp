@@ -36,14 +36,14 @@ Sim::Sim(QObject *parent) :
     dataValues = NULL;
 
     /* initializing simulator structs */
-    motor.inertia = 0.000007;
+    motor.inertia = 1.1;
     motor.damping = 0.001;
     motor.static_friction = 0.1;
     motor.Kv = 1./32.3*1000;
-    motor.L = 0.00207;
+    motor.L = 0.0207;
     motor.M = -0.00069;
     motor.R = 11.9;
-    motor.VDC = 25;
+    motor.VDC = 100;
     motor.NbPoles = 4;
 
     cv.hu = true;
@@ -53,14 +53,14 @@ Sim::Sim(QObject *parent) :
     cv.hw = false;
     cv.lw = false;
 
-    pv.torque = -0.2;
+    pv.torque = 0.02;
 
     params.m = &motor;
     params.cv = &cv;
     params.pv = &pv;
 
-    setpoint.pwm_frequency = 10000;
-    setpoint.pwm_duty = 0.25;
+    setpoint.pwm_frequency = 16000;
+    setpoint.pwm_duty = 1.0;
 }
 
 Sim::~Sim()
@@ -80,8 +80,9 @@ void Sim::start()
     gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45, 1e-6, 1e-6, 0.0);
 
     int i;
-    double t = 0.0, t1 = 20.0;
-    double sim_freq = 1000000;
+    int count = 0;
+    double t = 0.0, t1 = 50.;
+    double sim_freq = 500000;
     int steps = (t1-t) * sim_freq;
     struct state_vector sv;
     //double perc;
@@ -111,12 +112,18 @@ void Sim::start()
             dataValues->append(new QVector<double>);
             dataValues->append(new QVector<double>);
         }
+
+        if (count == 19) {
+            count = 0;
         dataTimes->append(t);
         (*dataValues)[0]->append(sv.iu);
         (*dataValues)[1]->append(sv.iv);
         (*dataValues)[2]->append(sv.iw);
-        (*dataValues)[3]->append(norm_angle(sv.theta)/100);
-        (*dataValues)[4]->append(sv.omega/200);
+        (*dataValues)[3]->append(norm_angle(sv.theta)/100); /* position */
+        (*dataValues)[4]->append(sv.omega/50);             /* speed */
+        } else {
+            ++count;
+        }
 
         if (!sendDataTimer.isActive() || (i == steps)) {
             //qDebug() << "Adding " << dataTimes->count() << " data points from " << dataTimes->first() << " to " << dataTimes->last();
