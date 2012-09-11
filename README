@@ -1,0 +1,13 @@
+This is the QT based gui for Open-BLDC C simulator.
+
+== Compiling ==
+
+After checkout you need to run:
+ git submodules init
+ git submodules update
+
+To get the csim sources.
+
+Then you can open the open-bldc-qsim.pro in QT Creator and run.
+
+Happy spinning!
