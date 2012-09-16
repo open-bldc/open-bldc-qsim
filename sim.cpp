@@ -46,12 +46,12 @@ Sim::Sim(QObject *parent) :
     motor.VDC = 100;
     motor.NbPoles = 4;
 
-    cv.hu = true;
-    cv.lu = false;
-    cv.hv = false;
-    cv.lv = true;
-    cv.hw = false;
-    cv.lw = false;
+    cv.hu = NULL;
+    cv.lu = NULL;
+    cv.hv = NULL;
+    cv.lv = NULL;
+    cv.hw = NULL;
+    cv.lw = NULL;
 
     pv.torque = 0.02;
 
@@ -81,17 +81,18 @@ void Sim::start()
 
     int i;
     int count = 0;
-    double t = 0.0, t1 = 50.;
+    double t = 0.0, t_end = 50.;
     double sim_freq = 500000;
-    int steps = (t1-t) * sim_freq;
+    int steps = (t_end - t) * sim_freq;
+    double t_step = (t_end - t) / steps;
     struct state_vector sv;
     //double perc;
 
     init_state(&sv);
-    run(t, &setpoint, &motor, &sv, &cv);
+    run(t, t + t_step, &setpoint, &motor, &sv, &cv);
 
     for (i=1; i <= steps; i++) {
-        double ti = i * (t1 / steps);
+        double ti = i * t_step;
         int status = gsl_odeiv2_driver_apply(d, &t, ti, (double *)&sv);
 
         if (status != GSL_SUCCESS) {
@@ -133,7 +134,7 @@ void Sim::start()
             sendDataTimer.start();
         }
 
-        run(t, &setpoint, &motor, &sv, &cv);
+        run(t, t + t_step, &setpoint, &motor, &sv, &cv);
     }
 
     gsl_odeiv2_driver_free (d);
