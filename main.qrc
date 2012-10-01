@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/pause_sim_active.png</file>
+        <file>icons/pause_sim_inactive.png</file>
+        <file>icons/run_sim_active.png</file>
+        <file>icons/run_sim_inactive.png</file>
+        <file>icons/stop_sim_active.png</file>
+        <file>icons/stop_sim_inactive.png</file>
+    </qresource>
+</RCC>

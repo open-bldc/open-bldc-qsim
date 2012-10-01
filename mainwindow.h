@@ -39,11 +39,16 @@ private:
     Ui::MainWindow *ui;
     SimRunner *sr;
 
+signals:
+    void runSim();
+    void stopSim();
+
 private slots:
     void on_PWMDutySlider_valueChanged(int value);
     void on_PWMDutySpinBox_valueChanged(double arg1);
     void on_PWMDutySendButton_clicked();
     void on_PWMDutySendLockButton_toggled(bool checked);
+    void on_actionRunSim_triggered();
 };
 
 #endif // MAINWINDOW_H

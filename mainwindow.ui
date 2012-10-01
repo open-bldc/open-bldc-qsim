@@ -94,19 +94,6 @@
        <string>Sim Settings</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="1" column="0">
-        <widget class="QPushButton" name="runSimButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Run Sim</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="PWMSettingsGroupBox">
          <property name="sizePolicy">
@@ -241,7 +228,15 @@
     </property>
     <addaction name="actionOpen"/>
    </widget>
+   <widget class="QMenu" name="menuSim">
+    <property name="title">
+     <string>Sim</string>
+    </property>
+    <addaction name="actionRunSim"/>
+    <addaction name="actionPauseSim"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuSim"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -250,11 +245,42 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionRunSim"/>
+   <addaction name="actionPauseSim"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
+   </property>
+  </action>
+  <action name="actionRunSim">
+   <property name="icon">
+    <iconset resource="main.qrc">
+     <normaloff>:/icons/icons/run_sim_active.png</normaloff>
+     <disabledoff>:/icons/icons/run_sim_inactive.png</disabledoff>:/icons/icons/run_sim_active.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Run</string>
+   </property>
+   <property name="toolTip">
+    <string>Run Simulator</string>
+   </property>
+  </action>
+  <action name="actionPauseSim">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="main.qrc">
+     <normaloff>:/icons/icons/pause_sim_active.png</normaloff>
+     <disabledoff>:/icons/icons/pause_sim_inactive.png</disabledoff>:/icons/icons/pause_sim_active.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pause</string>
+   </property>
+   <property name="toolTip">
+    <string>Pause Simulator</string>
    </property>
   </action>
  </widget>
@@ -267,9 +293,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>runSimButton</tabstop>
- </tabstops>
- <resources/>
+ <resources>
+  <include location="main.qrc"/>
+ </resources>
  <connections/>
 </ui>

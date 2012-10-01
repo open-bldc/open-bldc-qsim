@@ -30,7 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     sr = new SimRunner();
 
-    connect(ui->runSimButton, SIGNAL(clicked()), sr, SLOT(runSim()));
+    connect(this, SIGNAL(runSim()), sr, SLOT(runSim()));
+    connect(this, SIGNAL(stopSim()), sr, SLOT(stopSim()));
     connect(sr, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), ui->signalPlot, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)));
 
     ui->PWMDutySpinBox->setValue(sr->getPWMDuty()*100);
@@ -68,4 +69,10 @@ void MainWindow::on_PWMDutySendLockButton_toggled(bool checked)
         ui->PWMDutySendButton->setChecked(false);
         ui->PWMDutySendButton->setEnabled(true);
     }
+}
+
+void MainWindow::on_actionRunSim_triggered()
+{
+    ui->actionRunSim->setEnabled(false);
+    emit runSim();
 }

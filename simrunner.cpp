@@ -41,8 +41,8 @@ void SimRunner::runSim(void)
         sim->moveToThread(thread);
         connect(thread, SIGNAL(started()), sim, SLOT(start()), Qt::QueuedConnection);
         connect(sim, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), this, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)), Qt::QueuedConnection);
-        connect(sim, SIGNAL(finished()), thread, SLOT(quit()), Qt::QueuedConnection);
-        connect(sim, SIGNAL(finished()), sim, SLOT(deleteLater()), Qt::QueuedConnection);
+        //connect(sim, SIGNAL(finished()), thread, SLOT(quit()), Qt::QueuedConnection);
+        //connect(sim, SIGNAL(finished()), sim, SLOT(deleteLater()), Qt::QueuedConnection);
         connect(sim, SIGNAL(finished()), this, SLOT(simFinished()));
 
         thread->start();
@@ -59,6 +59,11 @@ void SimRunner::onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<doub
 void SimRunner::simFinished()
 {
     qDebug() << "Simulator finished signal...";
+}
+
+void SimRunner::stopSim()
+{
+    sim->stopSim();
 }
 
 void SimRunner::setPWMDuty(double duty)

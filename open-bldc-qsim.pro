@@ -39,3 +39,6 @@ macx {
 }
 
 LIBS += -lgsl
+
+RESOURCES += \
+    main.qrc

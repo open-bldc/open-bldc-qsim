@@ -41,6 +41,7 @@ signals:
     
 public slots:
     void runSim(void);
+    void stopSim(void);
     void onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     void simFinished(void);
     
