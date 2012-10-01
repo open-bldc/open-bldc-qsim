@@ -167,3 +167,8 @@ void Sim::setPWMDuty(double duty)
     setpoint.pwm_duty = duty;
     setpointMutex.unlock();
 }
+
+double Sim::getPWMDuty()
+{
+    return setpoint.pwm_duty;
+}

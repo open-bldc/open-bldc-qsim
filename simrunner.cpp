@@ -25,6 +25,7 @@ SimRunner::SimRunner(QObject *parent) :
 {
     running = false;
     thread = NULL;
+    sim = new Sim();
 }
 
 void SimRunner::runSim(void)
@@ -37,7 +38,6 @@ void SimRunner::runSim(void)
         if (thread == NULL) {
             thread = new QThread();
         }
-        sim = new Sim();
         sim->moveToThread(thread);
         connect(thread, SIGNAL(started()), sim, SLOT(start()), Qt::QueuedConnection);
         connect(sim, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), this, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)), Qt::QueuedConnection);
@@ -64,4 +64,9 @@ void SimRunner::simFinished()
 void SimRunner::setPWMDuty(double duty)
 {
     sim->setPWMDuty(duty);
+}
+
+double SimRunner::getPWMDuty()
+{
+    return sim->getPWMDuty();
 }

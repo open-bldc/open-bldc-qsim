@@ -29,6 +29,7 @@ class SimRunner : public QObject
 public:
     explicit SimRunner(QObject *parent = 0);
     void setPWMDuty(double duty);
+    double getPWMDuty(void);
 
 private:
     QThread *thread;

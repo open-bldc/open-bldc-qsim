@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->runSimButton, SIGNAL(clicked()), sr, SLOT(runSim()));
     connect(sr, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), ui->signalPlot, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)));
+
+    ui->PWMDutySpinBox->setValue(sr->getPWMDuty()*100);
 }
 
 MainWindow::~MainWindow()

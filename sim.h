@@ -35,6 +35,7 @@ public:
     ~Sim();
     void stopSim();
     void setPWMDuty(double duty);
+    double getPWMDuty(void);
 
 private:
     double time;
