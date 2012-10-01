@@ -32,10 +32,38 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->runSimButton, SIGNAL(clicked()), sr, SLOT(runSim()));
     connect(sr, SIGNAL(newDataPoints(QVector<double>*,QVector<QVector<double> *>*)), ui->signalPlot, SLOT(onNewDataPoints(QVector<double>*,QVector<QVector<double> *>*)));
-    connect(ui->PWMDutySlider, SIGNAL(sliderMoved(int)), sr, SLOT(onPWMDutySliderMoved(int)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_PWMDutySlider_valueChanged(int value)
+{
+    ui->PWMDutySpinBox->setValue(value/10.0);
+}
+
+void MainWindow::on_PWMDutySpinBox_valueChanged(double arg1)
+{
+    ui->PWMDutySlider->setValue(arg1 * 10);
+    if (ui->PWMDutySendLockButton->isChecked()) {
+        sr->setPWMDuty(arg1/100.0);
+    }
+}
+
+void MainWindow::on_PWMDutySendButton_clicked()
+{
+    sr->setPWMDuty(ui->PWMDutySpinBox->value()/100.0);
+}
+
+void MainWindow::on_PWMDutySendLockButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->PWMDutySendButton->setChecked(true);
+        ui->PWMDutySendButton->setEnabled(false);
+    } else {
+        ui->PWMDutySendButton->setChecked(false);
+        ui->PWMDutySendButton->setEnabled(true);
+    }
 }

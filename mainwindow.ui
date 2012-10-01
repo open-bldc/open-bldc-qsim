@@ -139,13 +139,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="PWMFreqButton">
-            <property name="text">
-             <string>Set</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0" rowspan="2">
            <widget class="QLabel" name="label_2">
             <property name="text">
@@ -154,12 +147,15 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="PWMDutySpinBox"/>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="PWMDutyButton">
-            <property name="text">
-             <string>Set</string>
+           <widget class="QDoubleSpinBox" name="PWMDutySpinBox">
+            <property name="suffix">
+             <string>%</string>
+            </property>
+            <property name="maximum">
+             <double>99.989999999999995</double>
+            </property>
+            <property name="singleStep">
+             <double>1.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -173,6 +169,52 @@
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QToolButton" name="PWMDutySendButton">
+            <property name="toolTip">
+             <string>Send Value</string>
+            </property>
+            <property name="text">
+             <string>S</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QToolButton" name="PWMDutySendLockButton">
+            <property name="toolTip">
+             <string>Autosend Value Lock</string>
+            </property>
+            <property name="text">
+             <string>L</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QToolButton" name="toolButton_3">
+            <property name="toolTip">
+             <string>Send Value</string>
+            </property>
+            <property name="text">
+             <string>S</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QToolButton" name="toolButton_4">
+            <property name="toolTip">
+             <string>Autosend Value Lock</string>
+            </property>
+            <property name="text">
+             <string>L</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

@@ -28,7 +28,8 @@ class SimRunner : public QObject
     Q_OBJECT
 public:
     explicit SimRunner(QObject *parent = 0);
-    
+    void setPWMDuty(double duty);
+
 private:
     QThread *thread;
     Sim *sim;
@@ -41,7 +42,6 @@ public slots:
     void runSim(void);
     void onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     void simFinished(void);
-    void onPWMDutySliderMoved(int);
     
 };
 

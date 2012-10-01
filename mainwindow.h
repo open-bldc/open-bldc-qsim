@@ -38,6 +38,12 @@ public:
 private:
     Ui::MainWindow *ui;
     SimRunner *sr;
+
+private slots:
+    void on_PWMDutySlider_valueChanged(int value);
+    void on_PWMDutySpinBox_valueChanged(double arg1);
+    void on_PWMDutySendButton_clicked();
+    void on_PWMDutySendLockButton_toggled(bool checked);
 };
 
 #endif // MAINWINDOW_H
