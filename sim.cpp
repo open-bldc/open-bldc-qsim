@@ -81,23 +81,19 @@ void Sim::start()
     // prams: system, driver, initial step size, absolute error, relative error
     gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45, 1e-6, 1e-6, 0.0);
 
-    int i;
     int count = 0;
-    double t = 0.0, t_end = 50.0;
+    double t = 0.0;
     double sim_freq = 100000.0;
-    //int steps = (t_end - t) * sim_freq;
     double t_step = 1.0 / sim_freq;
     struct state_vector sv;
     bool running = true;
     int status;
-    //double perc;
 
     init_state(&sv);
     setpointMutex.lock();
     run(t, t + t_step, &setpoint, &motor, &sv, &cv);
     setpointMutex.unlock();
 
-    //for (i=1; i <= steps; i++) {
     double ti = t;
     while(running) {
         ti += t_step;
@@ -106,9 +102,6 @@ void Sim::start()
         if (status != GSL_SUCCESS) {
             qDebug() << "error, return value=" << status;
         }
-
-        //perc = (100./steps)*i;
-        //qDebug() << "Progress: " << perc;
 
         if (dataTimes == NULL) {
             dataTimes = new QVector<double>;
@@ -134,7 +127,6 @@ void Sim::start()
             ++count;
         }
 
-        //if (!sendDataTimer.isActive() || (i == steps)) {
         if (!sendDataTimer.isActive()) {
             //qDebug() << "Adding " << dataTimes->count() << " data points from " << dataTimes->first() << " to " << dataTimes->last();
             emit newDataPoints(dataTimes, dataValues);
