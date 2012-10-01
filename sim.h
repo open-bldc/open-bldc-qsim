@@ -34,6 +34,7 @@ public:
     explicit Sim(QObject *parent = 0);
     ~Sim();
     void stopSim();
+    void setPWMDuty(double duty);
 
 private:
     double time;
@@ -47,6 +48,7 @@ private:
     struct perturbation_vector pv;
     struct parameters params;
     struct setpoint setpoint;
+    QMutex setpointMutex;
 
 signals:
     void newDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);

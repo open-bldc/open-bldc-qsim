@@ -41,6 +41,7 @@ public slots:
     void runSim(void);
     void onNewDataPoints(QVector<double> *dataTimes, QVector<QVector<double> *> *dataValues);
     void simFinished(void);
+    void onPWMDutySliderMoved(int);
     
 };
 

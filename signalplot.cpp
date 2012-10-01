@@ -43,7 +43,7 @@ void SignalPlot::setupPlot()
     xAxis->setNumberFormat("f");
     xAxis->setNumberPrecision(3);
     xAxis->setAutoTickStep(false);
-    xAxis->setTickStep(0.005);
+    xAxis->setTickStep(0.05);
     setupFullAxesBox();
 
     xAxis->setLabel("Time (s)");
@@ -62,7 +62,7 @@ void SignalPlot::setupPlot()
     //graph(0)->rescaleAxes(false, false);
     //graph(1)->rescaleAxes(false, false);
     //graph(2)->rescaleAxes(false, false);
-    xAxis->setRange(0, 0.01);
+    xAxis->setRange(0, 0.1);
     yAxis->setRange(-1, 1);
 }
 

@@ -60,3 +60,8 @@ void SimRunner::simFinished()
 {
     qDebug() << "Simulator finished signal...";
 }
+
+void SimRunner::onPWMDutySliderMoved(int duty)
+{
+    sim->setPWMDuty((double)duty / 1000.0);
+}

@@ -37,7 +37,7 @@ Sim::Sim(QObject *parent) :
 
     /* initializing simulator structs */
     motor.inertia = 1.1;
-    motor.damping = 0.001;
+    motor.damping = 0.5;
     motor.static_friction = 0.1;
     motor.Kv = 1./32.3*1000;
     motor.L = 0.0207;
@@ -59,8 +59,10 @@ Sim::Sim(QObject *parent) :
     params.cv = &cv;
     params.pv = &pv;
 
+    setpointMutex.lock();
     setpoint.pwm_frequency = 16000;
-    setpoint.pwm_duty = 1.0;
+    setpoint.pwm_duty = 0.75;
+    setpointMutex.unlock();
 }
 
 Sim::~Sim()
@@ -81,19 +83,25 @@ void Sim::start()
 
     int i;
     int count = 0;
-    double t = 0.0, t_end = 50.;
-    double sim_freq = 500000;
-    int steps = (t_end - t) * sim_freq;
-    double t_step = (t_end - t) / steps;
+    double t = 0.0, t_end = 50.0;
+    double sim_freq = 100000.0;
+    //int steps = (t_end - t) * sim_freq;
+    double t_step = 1.0 / sim_freq;
     struct state_vector sv;
+    bool running = true;
+    int status;
     //double perc;
 
     init_state(&sv);
+    setpointMutex.lock();
     run(t, t + t_step, &setpoint, &motor, &sv, &cv);
+    setpointMutex.unlock();
 
-    for (i=1; i <= steps; i++) {
-        double ti = i * t_step;
-        int status = gsl_odeiv2_driver_apply(d, &t, ti, (double *)&sv);
+    //for (i=1; i <= steps; i++) {
+    double ti = t;
+    while(running) {
+        ti += t_step;
+        status = gsl_odeiv2_driver_apply(d, &t, ti, (double *)&sv);
 
         if (status != GSL_SUCCESS) {
             qDebug() << "error, return value=" << status;
@@ -114,7 +122,7 @@ void Sim::start()
             dataValues->append(new QVector<double>);
         }
 
-        if (count == 19) {
+        if (count == 0) {
             count = 0;
         dataTimes->append(t);
         (*dataValues)[0]->append(sv.iu);
@@ -126,7 +134,8 @@ void Sim::start()
             ++count;
         }
 
-        if (!sendDataTimer.isActive() || (i == steps)) {
+        //if (!sendDataTimer.isActive() || (i == steps)) {
+        if (!sendDataTimer.isActive()) {
             //qDebug() << "Adding " << dataTimes->count() << " data points from " << dataTimes->first() << " to " << dataTimes->last();
             emit newDataPoints(dataTimes, dataValues);
             dataTimes = NULL;
@@ -134,7 +143,15 @@ void Sim::start()
             sendDataTimer.start();
         }
 
+        setpointMutex.lock();
         run(t, t + t_step, &setpoint, &motor, &sv, &cv);
+        setpointMutex.unlock();
+
+        shouldQuitMutex.lock();
+        if (shouldQuit) {
+            running = false;
+        }
+        shouldQuitMutex.unlock();
     }
 
     gsl_odeiv2_driver_free (d);
@@ -150,4 +167,11 @@ void Sim::stopSim()
     shouldQuitMutex.lock();
     shouldQuit = true;
     shouldQuitMutex.unlock();
+}
+
+void Sim::setPWMDuty(double duty)
+{
+    setpointMutex.lock();
+    setpoint.pwm_duty = duty;
+    setpointMutex.unlock();
 }
