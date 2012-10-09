@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/icons">
+    <qresource prefix="/">
         <file>icons/pause_sim_active.png</file>
         <file>icons/pause_sim_inactive.png</file>
         <file>icons/run_sim_active.png</file>

@@ -257,8 +257,8 @@
   <action name="actionRunSim">
    <property name="icon">
     <iconset resource="main.qrc">
-     <normaloff>:/icons/icons/run_sim_active.png</normaloff>
-     <disabledoff>:/icons/icons/run_sim_inactive.png</disabledoff>:/icons/icons/run_sim_active.png</iconset>
+     <normaloff>:/icons/run_sim_active.png</normaloff>
+     <disabledoff>:/icons/run_sim_inactive.png</disabledoff>:/icons/run_sim_active.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Run</string>
@@ -273,8 +273,8 @@
    </property>
    <property name="icon">
     <iconset resource="main.qrc">
-     <normaloff>:/icons/icons/pause_sim_active.png</normaloff>
-     <disabledoff>:/icons/icons/pause_sim_inactive.png</disabledoff>:/icons/icons/pause_sim_active.png</iconset>
+     <normaloff>:/icons/pause_sim_active.png</normaloff>
+     <disabledoff>:/icons/pause_sim_inactive.png</disabledoff>:/icons/pause_sim_active.png</iconset>
    </property>
    <property name="text">
     <string>Pause</string>
