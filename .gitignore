@@ -1,0 +1,7 @@
+.DS_Store
+*.o
+*.pro.user*
+*.app
+moc_*
+qrc_*
+ui_*
